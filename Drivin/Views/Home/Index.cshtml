@@ -1,7 +1,58 @@
-@{
+﻿@{
     ViewData["Title"] = "Drivin";
 }
 
 <div class="text-center">
+
+    <h4 class="display-4">Selecione a lista de e-mails</h4>
+
+    @* Upload file form *@
+
+    <div id="uploadFileContainer" class="container-sm mt-5">
+        <form class="mt-5" id="uploadForm" enctype="multipart/form-data">
+            <div class="row gx-2 justify-content-md-center">
+                <div class="col-lg-5 col-md-12 col-sm-12">
+                    <div class="mb-3">
+                        <input type="file" name="file" id="file" class="form-control m-1" />
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button id="uploadButton" type="button" class="btn btn-success w-100 m-1"
+                        disabled>Processar</button>
+                    <button id="loading" type="button" class="btn btn-success w-100 m-1" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Processando...</span>
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button id="cleanUploadButton" type="button" class="btn btn-danger w-100 m-1"
+                        disabled>Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @* Tables *@
+
+    <div id="table" class="container mt-5">
+        <table id="dynamicTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Arquivo</th>
+                    <th>Conteúdo</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Conteúdo dinâmico será inserido aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    @* Notifications *@
+
+    <div class="toast-container">
+        <!-- toasts will be appended here -->
+    </div>
 
 </div>

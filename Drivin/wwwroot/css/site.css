@@ -24,3 +24,22 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#feedback {
+  display: none;
+}
+
+#loading {
+  display: none;
+}
+
+#table {
+  display: none;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+}
