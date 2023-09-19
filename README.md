@@ -30,8 +30,8 @@ docker-compose up
 - Utilizando **Docker**:
 
 ```bash
-docker build -t drivin_email_file_upload_imagem -f Drivin/Dockerfile .
-docker run -d --name drivin_email_file_upload_container -p 5274:5274 drivin_email_file_upload_imagem
+docker build -t drivin_project_image -f Drivin/Dockerfile .
+docker run --name drivin_project_container -p 5274:5274 drivin_project_image
 ```
 
 - Utilizando **dotnet cli**:
