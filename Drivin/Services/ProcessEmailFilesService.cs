@@ -4,13 +4,24 @@ using System.Text.RegularExpressions;
 
 using Drivin.Models;
 
-public class EmailFilesService
+public class ProcessEmailFilesService
 {
-    public static async Task<List<EmailsSubfile>> ProcessEmailsFile(IFormFile file)
+    private int EmailsPerFile { get; set; }
+    private List<string> SortedEmailsList { get; set; }
+    private List<EmailsSubfile> SplitedEmailsList { get; }
+
+    public ProcessEmailFilesService(int emailsPerFile = 5)
     {
-        var emailsList = await ReadEmailsFile(file);
-        var emailsSublists = SplitEmailsList(emailsList);
-        return emailsSublists;
+        EmailsPerFile = emailsPerFile;
+        SortedEmailsList = new();
+        SplitedEmailsList = new();
+    }
+
+    public async Task<List<EmailsSubfile>> ProcessEmailsFile(IFormFile file)
+    {
+        await ReadEmailsFile(file);
+        SplitEmailsList(SortedEmailsList);
+        return SplitedEmailsList;
     }
 
     /// <summary>
@@ -19,7 +30,7 @@ public class EmailFilesService
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
-    private static async Task<List<string>> ReadEmailsFile(IFormFile file)
+    private async Task ReadEmailsFile(IFormFile file)
     {
         var result = new HashSet<string>();
         using (var reader = new StreamReader(file.OpenReadStream()))
@@ -34,32 +45,29 @@ public class EmailFilesService
         }
 
         var sortedList = result.Order();
-        return sortedList.ToList();
+        SortedEmailsList = sortedList.ToList();
     }
 
     /// <summary>
-    /// Turns a List of strings in Lists of 5 strings max
+    /// Turns a List of strings in a List of Lists of strings, grouping by number (EmailsPerFile)
     /// </summary>
     /// <param name="inputList"></param>
     /// <returns></returns>
-    private static List<EmailsSubfile> SplitEmailsList(List<string> inputList)
+    private void SplitEmailsList(List<string> inputList)
     {
-        var result = new List<EmailsSubfile>();
         var index = 1;
 
-        for (int i = 0; i < inputList.Count; i += 5)
+        for (int i = 0; i < inputList.Count; i += EmailsPerFile)
         {
             var subList = new List<string>();
-            for (int j = 0; j < 5 && (i + j) < inputList.Count; j++)
-            {
+            for (int j = 0; j < EmailsPerFile && (i + j) < inputList.Count; j++)
                 subList.Add(inputList[i + j]);
-            }
+            
             var emailsSubfile = new EmailsSubfile($"{index:00}.txt", subList);
             index++;
-            result.Add(emailsSubfile);
-        }
 
-        return result;
+            SplitedEmailsList.Add(emailsSubfile);
+        }
     }
 
     /// <summary>

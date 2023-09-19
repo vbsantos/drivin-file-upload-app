@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Text;
 
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +48,8 @@ public class HomeController : Controller
                 throw new Exception("Somente arquivos de texto são permitidos.");
 
             // Process file
-            var emailsSubfiles = await EmailFilesService.ProcessEmailsFile(model.File);
+            var service = new ProcessEmailFilesService(emailsPerFile: 5);
+            var emailsSubfiles = await service.ProcessEmailsFile(model.File);
 
             return Ok(emailsSubfiles);
         }
