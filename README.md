@@ -1,4 +1,4 @@
-# File Upload Project
+# Email File Upload Project
 
 ## Requisitos
 
@@ -18,3 +18,26 @@ Dentro dos novos arquivos gerados, não poderá haver repetições e nem e-mails
 Ao final você deve mostrar na pagina os links para download dos arquivos juntamente com seu respectivo conteúdo em tabelas. Pode ser usado uma tabela para cada lista.
 
 Obs.: essa página deve ser responsiva.
+
+## Como executar
+
+- Utilizando **Docker Compose**:
+
+```bash
+docker-compose up
+```
+
+- Utilizando **Docker**:
+
+```bash
+docker build -t drivin_email_file_upload_imagem -f Drivin/Dockerfile .
+docker run -d --name drivin_email_file_upload_container -p 5274:5274 drivin_email_file_upload_imagem
+```
+
+- Utilizando **dotnet cli**:
+
+```bash
+dotnet restore
+dotnet build
+dotnet run --project Drivin/Drivin.csproj
+```
