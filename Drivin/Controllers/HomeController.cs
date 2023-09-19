@@ -34,7 +34,9 @@ public class HomeController : Controller
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpPost("/EmailsFile")]
-    public async Task<IActionResult> UploadEmailsFile(FileUploadViewModel model)
+    public async Task<IActionResult> UploadEmailsFile(
+        FileUploadViewModel model
+    )
     {
         try
         {
